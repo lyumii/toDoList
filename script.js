@@ -42,9 +42,8 @@ function locateToDo(event) {
   todo.isComplete = true;
   completeToDos.push(incompleteToDos.splice(index, 1)[0]);
   renderCompletedToDos();
+  renderToDos();
 }
-
-/// remove the pushed todo from the ol
 
 function addToDo() {
   if (nameInput.value) {
@@ -57,13 +56,16 @@ function addToDo() {
   renderToDos();
 }
 
-/// make todo description appear only if the string is not empty
 function renderToDos() {
   incompleteList.innerHTML = "";
   for (let i = 0; i < incompleteToDos.length; i++) {
     let li = document.createElement("li");
-    li.innerHTML = `ToDo Name: ${incompleteToDos[i].name} <input type="checkbox" class="complete-check" data-index="${i}"> <br>
+    if (incompleteToDos[i].description === "") {
+      li.innerHTML = `ToDo Name: ${incompleteToDos[i].name} <input type="checkbox" class="complete-check" data-index="${i}">`;
+    } else {
+      li.innerHTML = `ToDo Name: ${incompleteToDos[i].name} <input type="checkbox" class="complete-check" data-index="${i}"><br>
                     ToDo Description: ${incompleteToDos[i].description}`;
+    }
     incompleteList.appendChild(li);
   }
 }

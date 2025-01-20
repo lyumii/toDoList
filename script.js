@@ -34,6 +34,12 @@ class ToDo {
         this.addToDo();
       }
     });
+    incompleteList.addEventListener("click", (event) => {
+      if (event.target.matches(".complete-check")) {
+        const li = event.target.closest("li");
+        this.locateToDo(event);
+      }
+    });
   }
 
   addToDo() {
@@ -47,26 +53,37 @@ class ToDo {
       alert("Please provide a valid task name.");
     }
   }
+
+  locateToDo(event) {
+    const checkedBox = event.target;
+    const index = checkedBox.dataset.index;
+    const todo = incompleteToDos[index];
+    todo.isComplete = true;
+    completeToDos.push(incompleteToDos.splice(index, 1)[0]);
+    renderCompletedToDos(completeToDos);
+    renderToDos(incompleteToDos);
+  }
 }
 
 const addNewToDo = new ToDo();
 addNewToDo.addEventListeners();
 
-incompleteList.addEventListener("click", (event) => {
-  if (event.target.matches(".complete-check")) {
-    const li = event.target.closest("li");
-    locateToDo(event);
+nameInput.addEventListener("click", (event) => {
+  if (dynamicDiv.classList.contains("hidden")) {
+    dynamicDiv.classList.remove("hidden");
+    dynamicDiv.classList.add("visible");
   }
 });
 
-function locateToDo(event) {
-  const checkedBox = event.target;
-  const index = checkedBox.dataset.index;
-  const todo = incompleteToDos[index];
-  todo.isComplete = true;
-  completeToDos.push(incompleteToDos.splice(index, 1)[0]);
-  renderCompletedToDos();
-  renderToDos();
+scrapBtn.addEventListener("click", (event) => {
+  closeAndClear();
+});
+
+function closeAndClear() {
+  dynamicDiv.classList.remove("visible");
+  dynamicDiv.classList.add("hidden");
+  nameInput.value = "";
+  descriptionInput.value = "";
 }
 
 function renderToDos() {

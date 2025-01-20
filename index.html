@@ -13,19 +13,23 @@
     <h3>Add a new task:</h3>
     <fieldset>
       <form action="">
-        <div>
-          <input id="name-input" type="text" placeholder="Add new To Do" />
-        </div>
-        <div>
-          <textarea
-            name="description"
-            id="description-input"
-            placeholder="To Do description"
-          ></textarea>
-        </div>
-        <div>
-          <button id="add-button" type="button">Add To Do</button>
-          <button id="scrap-button" type="button">Scrap To Do</button>
+        <div id="formdiv">
+          <div>
+            <input id="name-input" type="text" placeholder="Add new To Do" />
+          </div>
+          <div id="dynamic-div" class="visible">
+            <div>
+              <textarea
+                name="description"
+                id="description-input"
+                placeholder="To Do description"
+              ></textarea>
+            </div>
+            <div>
+              <button id="add-button" type="button">Add To Do</button>
+              <button id="scrap-button" type="button">Scrap To Do</button>
+            </div>
+          </div>
         </div>
         <!-- deadline when i know how to execute it -->
       </form>

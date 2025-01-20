@@ -1,6 +1,8 @@
+const dynamicDiv = document.getElementById("dynamic-div");
 const nameInput = document.getElementById("name-input");
 const descriptionInput = document.getElementById("description-input");
 const addBtn = document.getElementById("add-button");
+const scrapBtn = document.getElementById("scrap-button");
 const incompleteList = document.getElementById("incomplete-list");
 const completeList = document.getElementById("complete-list");
 const completeCheck = document.getElementsByClassName("complete-check");
@@ -15,18 +17,40 @@ class ToDo {
     this.isComplete = isComplete;
     this.deadline = deadline;
   }
+  addEventListeners() {
+    addBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.addToDo();
+    });
+    nameInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        this.addToDo();
+      }
+    });
+    descriptionInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        this.addToDo();
+      }
+    });
+  }
+
+  addToDo() {
+    if (nameInput.value) {
+      incompleteToDos.push(new ToDo(nameInput.value, descriptionInput.value));
+      nameInput.value = "";
+      descriptionInput.value = "";
+
+      renderToDos(incompleteToDos);
+    } else {
+      alert("Please provide a valid task name.");
+    }
+  }
 }
 
-addBtn.addEventListener("click", () => {
-  addToDo();
-});
-
-addBtn.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    addToDo();
-  }
-});
+const addNewToDo = new ToDo();
+addNewToDo.addEventListeners();
 
 incompleteList.addEventListener("click", (event) => {
   if (event.target.matches(".complete-check")) {
@@ -42,17 +66,6 @@ function locateToDo(event) {
   todo.isComplete = true;
   completeToDos.push(incompleteToDos.splice(index, 1)[0]);
   renderCompletedToDos();
-  renderToDos();
-}
-
-function addToDo() {
-  if (nameInput.value) {
-    incompleteToDos.push(new ToDo(nameInput.value, descriptionInput.value));
-    nameInput.value = "";
-    descriptionInput.value = "";
-  } else {
-    alert("Please provide a valid task name.");
-  }
   renderToDos();
 }
 

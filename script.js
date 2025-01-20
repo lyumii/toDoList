@@ -45,6 +45,8 @@ class ToDo {
   addToDo() {
     if (nameInput.value) {
       incompleteToDos.push(new ToDo(nameInput.value, descriptionInput.value));
+      dynamicDiv.classList.remove("visible");
+      dynamicDiv.classList.add("hidden");
       nameInput.value = "";
       descriptionInput.value = "";
 
